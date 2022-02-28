@@ -2,9 +2,9 @@
 #
 # See the README.md file in this directory for more information.
 
-import array
+# import array
 import ctypes
-import mmap
+# import mmap
 import sys
 from os import PathLike
 from typing import AbstractSet, Any, Container, Generic, Iterable, Protocol, TypeVar, Union
@@ -182,13 +182,13 @@ class SupportsNoArgReadline(Protocol[_T_co]):
 class SupportsWrite(Protocol[_T_contra]):
     def write(self, __s: _T_contra) -> object: ...
 
-ReadOnlyBuffer = bytes  # stable
+# ReadOnlyBuffer = bytes  # stable
 # Anything that implements the read-write buffer interface.
 # The buffer interface is defined purely on the C level, so we cannot define a normal Protocol
 # for it. Instead we have to list the most common stdlib buffer classes in a Union.
-WriteableBuffer = Union[bytearray, memoryview, array.array[Any], mmap.mmap, ctypes._CData]  # stable
+# WriteableBuffer = Union[bytearray, memoryview, array.array[Any], mmap.mmap, ctypes._CData]  # stable
 # Same as _WriteableBuffer, but also includes read-only buffer types (like bytes).
-ReadableBuffer = Union[ReadOnlyBuffer, WriteableBuffer]  # stable
+# ReadableBuffer = Union[ReadOnlyBuffer, WriteableBuffer]  # stable
 
 # stable
 if sys.version_info >= (3, 10):

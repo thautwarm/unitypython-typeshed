@@ -6,7 +6,7 @@ from typing import (
     Generic,
     Iterable,
     Iterator,
-    SupportsComplex,
+    # SupportsComplex,
     SupportsFloat,
     SupportsInt,
     TypeVar,
@@ -20,8 +20,8 @@ if sys.version_info >= (3, 9):
 
 _T = TypeVar("_T")
 _S = TypeVar("_S")
-_N = TypeVar("_N", int, float, SupportsFloat, SupportsInt, SupportsIndex, SupportsComplex)
-_Step = Union[int, float, SupportsFloat, SupportsInt, SupportsIndex, SupportsComplex]
+_N = TypeVar("_N", int, float, SupportsFloat, SupportsInt, SupportsIndex) # SupportsComplex)
+_Step = Union[int, float, SupportsFloat, SupportsInt, SupportsIndex] # SupportsComplex]
 
 Predicate = Callable[[_T], object]
 

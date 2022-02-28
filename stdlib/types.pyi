@@ -1,6 +1,5 @@
 import sys
 from _typeshed import SupportsKeysAndGetItem
-from importlib.abc import _LoaderProtocol
 from importlib.machinery import ModuleSpec
 from typing import (
     Any,
@@ -367,7 +366,7 @@ class ModuleType:
     __file__: str | None
     @property
     def __dict__(self) -> dict[str, Any]: ...  # type: ignore[override]
-    __loader__: _LoaderProtocol | None
+    # __loader__: _LoaderProtocol | None
     __package__: str | None
     __path__: MutableSequence[str]
     __spec__: ModuleSpec | None
@@ -400,30 +399,6 @@ class GeneratorType(Generator[_T_co, _T_contra, _V_co]):
     @overload
     def throw(self, __typ: BaseException, __val: None = ..., __tb: TracebackType | None = ...) -> _T_co: ...
 
-@final
-class AsyncGeneratorType(AsyncGenerator[_T_co, _T_contra]):
-    @property
-    def ag_await(self) -> Awaitable[Any] | None: ...
-    @property
-    def ag_frame(self) -> FrameType: ...
-    @property
-    def ag_running(self) -> bool: ...
-    @property
-    def ag_code(self) -> CodeType: ...
-    __name__: str
-    __qualname__: str
-    def __aiter__(self) -> AsyncGeneratorType[_T_co, _T_contra]: ...
-    def __anext__(self) -> Coroutine[Any, Any, _T_co]: ...
-    def asend(self, __val: _T_contra) -> Coroutine[Any, Any, _T_co]: ...
-    @overload
-    async def athrow(
-        self, __typ: type[BaseException], __val: BaseException | object = ..., __tb: TracebackType | None = ...
-    ) -> _T_co: ...
-    @overload
-    async def athrow(self, __typ: BaseException, __val: None = ..., __tb: TracebackType | None = ...) -> _T_co: ...
-    def aclose(self) -> Coroutine[Any, Any, None]: ...
-    if sys.version_info >= (3, 9):
-        def __class_getitem__(cls, __item: Any) -> GenericAlias: ...
 
 @final
 class CoroutineType(Coroutine[_T_co, _T_contra, _V_co]):
@@ -654,10 +629,10 @@ if sys.version_info >= (3, 10):
     @final
     class NoneType:
         def __bool__(self) -> Literal[False]: ...
-    EllipsisType = ellipsis  # noqa F811 from builtins
-    from builtins import _NotImplementedType
+    # EllipsisType = ellipsis  # noqa F811 from builtins
+    # from builtins import _NotImplementedType
 
-    NotImplementedType = _NotImplementedType  # noqa F811 from builtins
+    # NotImplementedType = _NotImplementedType  # noqa F811 from builtins
     @final
     class UnionType:
         @property

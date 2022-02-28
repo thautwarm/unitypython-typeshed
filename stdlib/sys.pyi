@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 from _typeshed import structseq
 from builtins import object as _object
@@ -43,6 +44,7 @@ maxsize: int
 maxunicode: int
 meta_path: list[_MetaPathFinder]
 modules: dict[str, ModuleType]
+
 if sys.version_info >= (3, 10):
     orig_argv: list[str]
 path: list[str]
@@ -304,17 +306,6 @@ if sys.version_info >= (3, 8):
     def addaudithook(hook: Callable[[str, tuple[Any, ...]], Any]) -> None: ...
     def audit(__event: str, *args: Any) -> None: ...
 
-_AsyncgenHook = Optional[Callable[[AsyncGenerator[Any, Any]], None]]
-
-@final
-class _asyncgen_hooks(structseq[_AsyncgenHook], tuple[_AsyncgenHook, _AsyncgenHook]):
-    @property
-    def firstiter(self) -> _AsyncgenHook: ...
-    @property
-    def finalizer(self) -> _AsyncgenHook: ...
-
-def get_asyncgen_hooks() -> _asyncgen_hooks: ...
-def set_asyncgen_hooks(firstiter: _AsyncgenHook = ..., finalizer: _AsyncgenHook = ...) -> None: ...
 
 if sys.version_info >= (3, 7):
     def get_coroutine_origin_tracking_depth() -> int: ...

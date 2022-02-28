@@ -1,2 +1,0 @@
-cachetools.Cache.get
-cachetools.cache.Cache.get
