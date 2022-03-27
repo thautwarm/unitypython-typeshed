@@ -17,15 +17,15 @@ from typing import (  # noqa Y022
     Counter as Counter,
     DefaultDict as DefaultDict,
     Deque as Deque,
-    ItemsView,
-    KeysView,
+    # ItemsView,
+    # KeysView,
     Mapping,
     NewType as NewType,
     NoReturn as NoReturn,
     Text as Text,
     Type as Type,
     TypeVar,
-    ValuesView,
+    # ValuesView,
     _Alias,
     overload as overload,
 )
@@ -72,9 +72,9 @@ class _TypedDict(Mapping[str, object], metaclass=abc.ABCMeta):
     # Mypy plugin hook for 'pop' expects that 'default' has a type variable type.
     def pop(self, k: NoReturn, default: _T = ...) -> object: ...  # type: ignore
     def update(self: _T, __m: _T) -> None: ...
-    def items(self) -> ItemsView[str, object]: ...
-    def keys(self) -> KeysView[str]: ...
-    def values(self) -> ValuesView[object]: ...
+    def items(self) -> iter[tuple[str, object]]: ...
+    def keys(self) -> iter[str]: ...
+    def values(self) -> iter[object]: ...
     def __delitem__(self, k: NoReturn) -> None: ...
 
 # TypedDict is a (non-subscriptable) special form.
@@ -95,10 +95,6 @@ if sys.version_info >= (3, 7):
 Annotated: _SpecialForm
 _AnnotatedAlias: Any  # undocumented
 
-@runtime_checkable
-class SupportsIndex(Protocol, metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def __index__(self) -> int: ...
 
 # New things in 3.10
 if sys.version_info >= (3, 10):
@@ -107,7 +103,7 @@ if sys.version_info >= (3, 10):
         ParamSpec as ParamSpec,
         TypeAlias as TypeAlias,
         TypeGuard as TypeGuard,
-        is_typeddict as is_typeddict,
+        # is_typeddict as is_typeddict,
     )
 else:
     class ParamSpecArgs:
