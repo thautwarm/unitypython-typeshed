@@ -30,6 +30,7 @@ from types import GeneratorType, UnionType
 # from io import BufferedRandom, BufferedReader, BufferedWriter, FileIO, TextIOWrapper
 # from types import CodeType, TracebackType # , _Cell
 from typing import (
+    Collection,
     Comparable,
     Generator,
     # IO,
@@ -62,6 +63,7 @@ from typing import (
     Coroutine,
 )
 from typing_extensions import Literal, TypeGuard, final
+import abc
 
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
@@ -202,6 +204,9 @@ class type:
         __dict: dict[str, Any],
         **kwds: Any,
     ) -> None: ...
+
+    @overload
+    def __new__(cls, __o: _T) -> Type[_T]: ...
     @overload
     def __new__(cls, __o: object) -> type: ...
     @overload
@@ -932,8 +937,13 @@ class tuple(Comparable[tuple], Sequence[_T_co], Generic[_T_co]):
 #         def __class_getitem__(cls, __item: Any) -> GenericAlias: ...
 
 # # Doesn't exist at runtime, but deleting this breaks mypy. See #2999
-# @final
-# class function:
+
+
+
+class function(abc.ABC):
+    @abc.abstractmethod
+    def __call__(self, *args, **kwargs) -> Any: ...
+
 #     # Make sure this class definition stays roughly in line with `types.FunctionType`
 #     __closure__: tuple[_Cell, ...] | None
 #     __code__: CodeType
@@ -998,7 +1008,7 @@ class list(Comparable[list], MutableSequence[_T], Generic[_T]):
 #         def __class_getitem__(cls, __item: Any) -> GenericAlias: ...
 
 @final
-class dict(MutableMapping[_KT, _VT], Generic[_KT, _VT]):
+class dict(Collection[_KT], Generic[_KT, _VT]):
     # __init__ should be kept roughly in line with `collections.UserDict.__init__`, which has similar semantics
     @overload
     def __init__(self: dict[_KT, _VT]) -> None: ...

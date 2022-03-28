@@ -38,14 +38,14 @@ __all__ = [
     "TypeVar",
     "Union",
     "AbstractSet",
-    "ByteString",
+    # "ByteString",
     "Container",
     "ContextManager",
     "Hashable",
     "ItemsView",
     "Iterable",
     "Iterator",
-    "KeysView",
+    # "KeysView",
     "Mapping",
     "MappingView",
     "MutableMapping",
@@ -53,7 +53,7 @@ __all__ = [
     "MutableSet",
     "Sequence",
     "Sized",
-    "ValuesView",
+    # "ValuesView",
     "Awaitable",
     "AsyncIterator",
     "AsyncIterable",
@@ -78,14 +78,14 @@ __all__ = [
     "OrderedDict",
     "Set",
     "FrozenSet",
-    "NamedTuple",
+    # "NamedTuple",
     "TypedDict",
     "Generator",
-    "BinaryIO",
-    "IO",
-    "Match",
-    "Pattern",
-    "TextIO",
+    # "BinaryIO",
+    # "IO",
+    # "Match",
+    # "Pattern",
+    # "TextIO",
     "AnyStr",
     "cast",
     "final",
@@ -132,6 +132,7 @@ class TypeVar:
 _promote = object()
 
 # N.B. Keep this definition in sync with typing_extensions._SpecialForm
+
 @_final
 class _SpecialForm:
     def __getitem__(self, typeargs: Any) -> object: ...
@@ -155,10 +156,9 @@ Union: _SpecialForm = ...
 Generic: _SpecialForm = ...
 # Protocol is only present in 3.8 and later, but mypy needs it unconditionally
 Protocol: _SpecialForm = ...
-Callable: _SpecialForm = ...
 Type: _SpecialForm = ...
 NoReturn: _SpecialForm = ...
-
+Callable: _SpecialForm
 Optional: _SpecialForm
 Tuple: _SpecialForm
 ClassVar: _SpecialForm
@@ -168,6 +168,7 @@ if sys.version_info >= (3, 8):
     Literal: _SpecialForm
     # TypedDict is a (non-subscriptable) special form.
     TypedDict: object
+
 
 if sys.version_info >= (3, 11):
     Self: _SpecialForm

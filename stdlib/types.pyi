@@ -12,11 +12,11 @@ from typing import (
     ItemsView,
     Iterable,
     Iterator,
-    KeysView,
+    # KeysView,
     Mapping,
     MutableSequence,
     TypeVar,
-    ValuesView,
+    # ValuesView,
     overload,
 )
 from typing_extensions import Literal, ParamSpec, final
@@ -72,36 +72,40 @@ _V_co = TypeVar("_V_co", covariant=True)
 #     cell_contents: Any
 
 # Make sure this class definition stays roughly in line with `builtins.function`
-@final
-class FunctionType:
-    # @property
-    # def __closure__(self) -> tuple[_Cell, ...] | None: ...
-    # __code__: CodeType
-    # __defaults__: tuple[Any, ...] | None
-    # __dict__: dict[str, Any]
-    @property
-    def __globals__(self) -> dict[str, Any]: ...
-    # __name__: str
-    # __qualname__: str
-    # __annotations__: dict[str, Any]
-    # __kwdefaults__: dict[str, Any]
-    # if sys.version_info >= (3, 10):
-        # @property
-        # def __builtins__(self) -> dict[str, Any]: ...
 
-    # def __init__(
-    #     self,
-    #     code: CodeType,
-    #     globals: dict[str, Any],
-    #     name: str | None = ...,
-    #     argdefs: tuple[object, ...] | None = ...,
-    #     # closure: tuple[_Cell, ...] | None = ...,
-    # ) -> None: ...
-    def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
-    # @overload
-    # def __get__(self, obj: None, type: type) -> FunctionType: ...
-    # @overload
-    # def __get__(self, obj: object, type: type | None = ...) -> MethodType: ...
+class FunctionType(function):
+    pass
+
+# @final
+# class FunctionType:
+#     # @property
+#     # def __closure__(self) -> tuple[_Cell, ...] | None: ...
+#     # __code__: CodeType
+#     # __defaults__: tuple[Any, ...] | None
+#     # __dict__: dict[str, Any]
+#     @property
+#     def __globals__(self) -> dict[str, Any]: ...
+#     # __name__: str
+#     # __qualname__: str
+#     # __annotations__: dict[str, Any]
+#     # __kwdefaults__: dict[str, Any]
+#     # if sys.version_info >= (3, 10):
+#         # @property
+#         # def __builtins__(self) -> dict[str, Any]: ...
+
+#     # def __init__(
+#     #     self,
+#     #     code: CodeType,
+#     #     globals: dict[str, Any],
+#     #     name: str | None = ...,
+#     #     argdefs: tuple[object, ...] | None = ...,
+#     #     # closure: tuple[_Cell, ...] | None = ...,
+#     # ) -> None: ...
+#     def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
+#     # @overload
+#     # def __get__(self, obj: None, type: type) -> FunctionType: ...
+#     # @overload
+#     # def __get__(self, obj: object, type: type | None = ...) -> MethodType: ...
 
 LambdaType = FunctionType
 
@@ -151,8 +155,8 @@ class BuiltinFunctionType:
     def __self__(self) -> object | ModuleType: ...
     @property
     def __name__(self) -> str: ...
-    @property
-    def __qualname__(self) -> str: ...
+    # @property
+    # def __qualname__(self) -> str: ...
     def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
 
 BuiltinMethodType = BuiltinFunctionType
