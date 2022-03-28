@@ -294,6 +294,15 @@ class SupportsAbs(Protocol[_T_co]):
     @abstractmethod
     def __abs__(self) -> _T_co: ...
 
+
+@runtime_checkable
+class SupportsHash(Protocol):
+    __slots__ = ()
+
+    @abstractmethod
+    def __hash__(self) -> int:
+        pass
+
 @runtime_checkable
 class SupportsRound(Protocol[_T_co]):
     @overload
