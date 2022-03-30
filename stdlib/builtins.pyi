@@ -193,9 +193,9 @@ class type:
     # __qualname__: str
     # __text_signature__: str | None
     # __weakrefoffset__: int
-    @overload
-    def __init__(self, __o: object) -> None: ...
-    @overload
+    # @overload
+    # def __init__(self, __o: object) -> None: ...
+    # @overload
     def __init__(
         self,
         __name: str,
