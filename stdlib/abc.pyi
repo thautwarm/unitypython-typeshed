@@ -8,6 +8,8 @@ _T = TypeVar("_T")
 _R_co = TypeVar("_R_co", covariant=True)
 _FuncT = TypeVar("_FuncT", bound=Callable[..., Any])
 
+__all__ = ["ABC", "abstractmethod"]
+
 # These definitions have special processing in mypy
 class ABCMeta(type):
     __abstractmethods__: frozenset[str]
@@ -19,20 +21,20 @@ class ABCMeta(type):
 
 def abstractmethod(funcobj: _FuncT) -> _FuncT: ...
 
-class abstractclassmethod(classmethod[_R_co], Generic[_R_co]):
-    __isabstractmethod__: Literal[True]
-    def __init__(self: abstractclassmethod[_R_co], callable: Callable[..., _R_co]) -> None: ...
+# class abstractclassmethod(classmethod[_R_co], Generic[_R_co]):
+#     __isabstractmethod__: Literal[True]
+#     def __init__(self: abstractclassmethod[_R_co], callable: Callable[..., _R_co]) -> None: ...
 
-class abstractstaticmethod(staticmethod[_R_co], Generic[_R_co]):
-    __isabstractmethod__: Literal[True]
-    def __init__(self, callable: Callable[..., _R_co]) -> None: ...
+# class abstractstaticmethod(staticmethod[_R_co], Generic[_R_co]):
+#     __isabstractmethod__: Literal[True]
+#     def __init__(self, callable: Callable[..., _R_co]) -> None: ...
 
-class abstractproperty(property):
-    __isabstractmethod__: Literal[True]
+# class abstractproperty(property):
+#     __isabstractmethod__: Literal[True]
 
 class ABC(metaclass=ABCMeta): ...
 
-def get_cache_token() -> object: ...
+# def get_cache_token() -> object: ...
 
-if sys.version_info >= (3, 10):
-    def update_abstractmethods(cls: type[_T]) -> type[_T]: ...
+# if sys.version_info >= (3, 10):
+#     def update_abstractmethods(cls: type[_T]) -> type[_T]: ...

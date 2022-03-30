@@ -9,18 +9,19 @@ from typing import (
     Coroutine,
     Generator,
     Generic,
-    ItemsView,
+    # ItemsView,
     Iterable,
     Iterator,
     # KeysView,
     Mapping,
-    MutableSequence,
+    # MutableSequence,
     TypeVar,
     # ValuesView,
     overload,
 )
 from typing_extensions import Literal, ParamSpec, final
 
+TracebackType = type(None)
 
 __all__ = [
     "FunctionType",
@@ -40,7 +41,7 @@ __all__ = [
     "MethodDescriptorType",
     "ClassMethodDescriptorType",
     "ModuleType",
-    "TracebackType",
+    # "TracebackType",
     # "FrameType",
     # "GetSetDescriptorType",
     # "MemberDescriptorType",
@@ -116,7 +117,7 @@ class ModuleType:
     def __dict__(self) -> dict[str, Any]: ...  # type: ignore[override]
     # __loader__: _LoaderProtocol | None
     __package__: str | None
-    __path__: MutableSequence[str]
+    # __path__: MutableSequence[str]
     __spec__: ModuleSpec | None
     def __init__(self, name: str, doc: str | None = ...) -> None: ...
     # __getattr__ doesn't exist at runtime,
@@ -209,7 +210,7 @@ if sys.version_info >= (3, 7):
         def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
         def __get__(self, obj: Any, type: type = ...) -> Any: ...
 
-TracebackType = type(None)
+# TracebackType = type(None)
 
 if sys.version_info >= (3, 7):
     def new_class(

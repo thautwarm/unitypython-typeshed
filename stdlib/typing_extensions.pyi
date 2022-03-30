@@ -4,19 +4,19 @@ from _typeshed import Self as TypeshedSelf  # see #6932 for why the alias cannot
 from typing import (  # noqa Y022
     TYPE_CHECKING as TYPE_CHECKING,
     Any,
-    AsyncContextManager as AsyncContextManager,
+    # AsyncContextManager as AsyncContextManager,
     AsyncGenerator as AsyncGenerator,
     AsyncIterable as AsyncIterable,
     AsyncIterator as AsyncIterator,
     Awaitable as Awaitable,
     Callable,
-    ChainMap as ChainMap,
+    # ChainMap as ChainMap,
     ClassVar as ClassVar,
     ContextManager as ContextManager,
     Coroutine as Coroutine,
-    Counter as Counter,
-    DefaultDict as DefaultDict,
-    Deque as Deque,
+    # Counter as Counter,
+    # DefaultDict as DefaultDict,
+    # Deque as Deque,
     # ItemsView,
     # KeysView,
     Mapping,
@@ -61,10 +61,10 @@ Literal: _SpecialForm
 def IntVar(name: str) -> Any: ...  # returns a new TypeVar
 
 # Internal mypy fallback type for all typed dicts (does not exist at runtime)
-class _TypedDict(Mapping[str, object], metaclass=abc.ABCMeta):
-    __required_keys__: frozenset[str]
-    __optional_keys__: frozenset[str]
-    __total__: bool
+class _TypedDict(dict[str, object], metaclass=abc.ABCMeta):
+    # __required_keys__: frozenset[str]
+    # __optional_keys__: frozenset[str]
+    # __total__: bool
     def copy(self: TypeshedSelf) -> TypeshedSelf: ...
     # Using NoReturn so that only calls using mypy plugin hook that specialize the signature
     # can go through.

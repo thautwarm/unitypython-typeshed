@@ -3,10 +3,11 @@ import sys
 import types
 from builtins import type as Type  # alias to avoid name clashes with fields named "type"
 from typing import Any, Callable, Generic, Iterable, Mapping, Protocol, TypeVar, overload
+import typing
 from typing_extensions import Literal
 
-if sys.version_info >= (3, 9):
-    from types import GenericAlias
+# if sys.version_info >= (3, 9):
+#     from types import GenericAlias
 
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
@@ -118,7 +119,7 @@ class Field(Generic[_T]):
     hash: bool | None
     init: bool
     compare: bool
-    metadata: types.MappingProxyType[Any, Any]
+    metadata: typing.Mapping[Any, Any]
     if sys.version_info >= (3, 10):
         kw_only: bool | Literal[_MISSING_TYPE.MISSING]
         def __init__(
@@ -146,74 +147,43 @@ class Field(Generic[_T]):
 
     def __set_name__(self, owner: Type[Any], name: str) -> None: ...
     if sys.version_info >= (3, 9):
-        def __class_getitem__(cls, item: Any) -> GenericAlias: ...
+        def __class_getitem__(cls, item: Any): ...
 
 # NOTE: Actual return type is 'Field[_T]', but we want to help type checkers
 # to understand the magic that happens at runtime.
-if sys.version_info >= (3, 10):
-    @overload  # `default` and `default_factory` are optional and mutually exclusive.
-    def field(
-        *,
-        default: _T,
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-        kw_only: bool = ...,
-    ) -> _T: ...
-    @overload
-    def field(
-        *,
-        default_factory: Callable[[], _T],
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-        kw_only: bool = ...,
-    ) -> _T: ...
-    @overload
-    def field(
-        *,
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-        kw_only: bool = ...,
-    ) -> Any: ...
 
-else:
-    @overload  # `default` and `default_factory` are optional and mutually exclusive.
-    def field(
-        *,
-        default: _T,
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-    ) -> _T: ...
-    @overload
-    def field(
-        *,
-        default_factory: Callable[[], _T],
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-    ) -> _T: ...
-    @overload
-    def field(
-        *,
-        init: bool = ...,
-        repr: bool = ...,
-        hash: bool | None = ...,
-        compare: bool = ...,
-        metadata: Mapping[Any, Any] | None = ...,
-    ) -> Any: ...
+@overload  # `default` and `default_factory` are optional and mutually exclusive.
+def field(
+    *,
+    default: _T,
+    init: bool = ...,
+    repr: bool = ...,
+    hash: bool | None = ...,
+    compare: bool = ...,
+    metadata: Mapping[Any, Any] | None = ...,
+    kw_only: bool = ...,
+) -> _T: ...
+@overload
+def field(
+    *,
+    default_factory: Callable[[], _T],
+    init: bool = ...,
+    repr: bool = ...,
+    hash: bool | None = ...,
+    compare: bool = ...,
+    metadata: Mapping[Any, Any] | None = ...,
+    kw_only: bool = ...,
+) -> _T: ...
+@overload
+def field(
+    *,
+    init: bool = ...,
+    repr: bool = ...,
+    hash: bool | None = ...,
+    compare: bool = ...,
+    metadata: Mapping[Any, Any] | None = ...,
+    kw_only: bool = ...,
+) -> Any: ...
 
 def fields(class_or_instance: Any) -> tuple[Field[Any], ...]: ...
 def is_dataclass(obj: Any) -> bool: ...

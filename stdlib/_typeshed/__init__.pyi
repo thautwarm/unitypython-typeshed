@@ -7,7 +7,7 @@ import ctypes
 # import mmap
 import sys
 from os import PathLike
-from typing import AbstractSet, Any, Container, Generic, Iterable, Protocol, TypeVar, Union
+from typing import Any, Container, Generic, Iterable, Protocol, TypeGuard, TypeVar, Union
 from typing_extensions import Final, Literal, final
 
 _KT = TypeVar("_KT")
@@ -29,7 +29,7 @@ class IdentityFunction(Protocol):
 
 # stable
 class SupportsNext(Protocol[_T_co]):
-    def __next__(self) -> _T_co: ...
+    def __next__(self, __ref: ref[Any]) -> TypeGuard[_T_co]: ...
 
 # stable
 class SupportsAnext(Protocol[_T_co]):
@@ -71,7 +71,7 @@ class SupportsTrunc(Protocol):
 
 # stable
 class SupportsItems(Protocol[_KT_co, _VT_co]):
-    def items(self) -> AbstractSet[tuple[_KT_co, _VT_co]]: ...
+    def items(self) -> iter[tuple[_KT_co, _VT_co]]: ...
 
 # stable
 class SupportsKeysAndGetItem(Protocol[_KT, _VT_co]):
