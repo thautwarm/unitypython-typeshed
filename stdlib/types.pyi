@@ -112,18 +112,18 @@ LambdaType = FunctionType
 
 class ModuleType:
     __name__: str
-    __file__: str | None
+    # __file__: str | None
     @property
     def __dict__(self) -> dict[str, Any]: ...  # type: ignore[override]
     # __loader__: _LoaderProtocol | None
-    __package__: str | None
+    # __package__: str | None
     # __path__: MutableSequence[str]
-    __spec__: ModuleSpec | None
-    def __init__(self, name: str, doc: str | None = ...) -> None: ...
+    # __spec__: ModuleSpec | None
+    # def __init__(self, name: str, doc: str | None = ...) -> None: ...
     # __getattr__ doesn't exist at runtime,
     # but having it here in typeshed makes dynamic imports
     # using `builtins.__import__` or `importlib.import_module` less painful
-    def __getattr__(self, name: str) -> Any: ...
+    # def __getattr__(self, name: str) -> Any: ...
 
 GeneratorType = Generator
 
