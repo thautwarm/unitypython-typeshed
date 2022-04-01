@@ -1,12 +1,9 @@
 import sys
 from _typeshed import SupportsTrunc
-from typing import Iterable, SupportsFloat, Union, overload
-from typing_extensions import SupportsIndex
+from typing import Iterable, overload
 
-if sys.version_info >= (3, 8):
-    _SupportsFloatOrIndex = Union[SupportsFloat, SupportsIndex]
-else:
-    _SupportsFloatOrIndex = SupportsFloat
+_SupportsFloatOrIndex = int | float
+
 
 e: float
 pi: float

@@ -8,11 +8,12 @@ from types import (
     FunctionType,
     MethodType,
     ModuleType,
+    UnionType,
     # TracebackType,
 )
 from typing_extensions import (
-    Literal as _Literal,
-    ParamSpec as _ParamSpec,
+    # Literal as _Literal,
+    # ParamSpec as _ParamSpec,
     final as _final,
 )
 
@@ -24,19 +25,19 @@ __all__ = [
     "Annotated",
     "Any",
     "Callable",
-    "ClassVar",
-    "Concatenate",
+    # "ClassVar",
+    # "Concatenate",
     "Final",
     "ForwardRef",
     "Generic",
     "Literal",
-    "Optional",
-    "ParamSpec",
+    # "Optional",
+    # "ParamSpec",
     "Protocol",
     "Tuple",
     "Type",
     "TypeVar",
-    "Union",
+    # "Union",
     # "AbstractSet",
     # "ByteString",
     "Container",
@@ -55,8 +56,8 @@ __all__ = [
     "Sized",
     # "ValuesView",
     "Awaitable",
-    "AsyncIterator",
-    "AsyncIterable",
+    # "AsyncIterator",
+    # "AsyncIterable",
     "Coroutine",
     "Collection",
     "AsyncGenerator",
@@ -89,9 +90,9 @@ __all__ = [
     "AnyStr",
     "cast",
     "final",
-    "get_args",
-    "get_origin",
-    "get_type_hints",
+    # "get_args",
+    # "get_origin",
+    # "get_type_hints",
     # "is_typeddict",
     "NewType",
     "no_type_check",
@@ -101,7 +102,7 @@ __all__ = [
     # "ParamSpecArgs",
     # "ParamSpecKwargs",
     "runtime_checkable",
-    "Text",
+    # "Text",
     "TYPE_CHECKING",
     "TypeAlias",
     "TypeGuard",
@@ -140,7 +141,7 @@ class _SpecialForm:
     # def __ror__(self, other: Any) -> _SpecialForm: ...
 
 _F = TypeVar("_F", bound=Callable[..., Any])
-_P = _ParamSpec("_P")
+# _P = _ParamSpec("_P")
 _T = TypeVar("_T")
 
 def overload(func: _F) -> _F: ...
@@ -151,16 +152,16 @@ def overload(func: _F) -> _F: ...
 # Otherwise, flake8 erroneously flags them as undefined.
 # `_SpecialForm` objects in typing.py that are not used elswhere in the same file
 # do not need the default value assignment.
-Union: _SpecialForm = ...
+# Union: _SpecialForm = ...
 Generic: _SpecialForm = ...
 # Protocol is only present in 3.8 and later, but mypy needs it unconditionally
 Protocol: _SpecialForm = ...
 Type: _SpecialForm = ...
 NoReturn: _SpecialForm = ...
 Callable: _SpecialForm
-Optional: _SpecialForm
+# Optional: _SpecialForm
 Tuple: _SpecialForm
-ClassVar: _SpecialForm
+# ClassVar: _SpecialForm
 if sys.version_info >= (3, 8):
     Final: _SpecialForm
     def final(f: _T) -> _T: ...
@@ -169,54 +170,52 @@ if sys.version_info >= (3, 8):
     TypedDict: object
 
 
-if sys.version_info >= (3, 11):
-    Self: _SpecialForm
-    Never: _SpecialForm = ...
+Self: _SpecialForm
+Never: _SpecialForm = ...
+    
+# class GenericMeta(type): ...
 
-if sys.version_info < (3, 7):
-    class GenericMeta(type): ...
+# TODO: support ParameterSpec
+# class ParamSpecArgs:
+#     __origin__: ParamSpec
+#     def __init__(self, origin: ParamSpec) -> None: ...
 
-if True:
-    class ParamSpecArgs:
-        __origin__: ParamSpec
-        def __init__(self, origin: ParamSpec) -> None: ...
+# class ParamSpecKwargs:
+#     __origin__: ParamSpec
+#     def __init__(self, origin: ParamSpec) -> None: ...
 
-    class ParamSpecKwargs:
-        __origin__: ParamSpec
-        def __init__(self, origin: ParamSpec) -> None: ...
+# class ParamSpec:
+#     __name__: str
+#     __bound__: Any | None
+#     __covariant__: bool
+#     __contravariant__: bool
+#     def __init__(
+#         self,
+#         name: str,
+#         *,
+#         bound: Any | None = ...,
+#         contravariant: bool = ...,
+#         covariant: bool = ...
+#     ) -> None: ...
+#     @property
+#     def args(self) -> ParamSpecArgs: ...
+#     @property
+#     def kwargs(self) -> ParamSpecKwargs: ...
+#     def __or__(self, other: Any) -> _SpecialForm: ...
+#     def __ror__(self, other: Any) -> _SpecialForm: ...
+    # Concatenate: _SpecialForm
+TypeAlias: _SpecialForm
+TypeGuard: _SpecialForm
 
-    class ParamSpec:
-        __name__: str
-        __bound__: Any | None
-        __covariant__: bool
-        __contravariant__: bool
-        def __init__(
-            self,
-            name: str,
-            *,
-            bound: Any | None = ...,
-            contravariant: bool = ...,
-            covariant: bool = ...
-        ) -> None: ...
-        @property
-        def args(self) -> ParamSpecArgs: ...
-        @property
-        def kwargs(self) -> ParamSpecKwargs: ...
-        def __or__(self, other: Any) -> _SpecialForm: ...
-        def __ror__(self, other: Any) -> _SpecialForm: ...
-    Concatenate: _SpecialForm
-    TypeAlias: _SpecialForm
-    TypeGuard: _SpecialForm
+class NewType:
+    def __init__(self, name: str, tp: type) -> None: ...
+    def __call__(self, x: _T) -> _T: ...
+    def __or__(self, other: Any) -> _SpecialForm: ...
+    # def __ror__(self, other: Any) -> _SpecialForm: ...
+    # __supertype__: type
 
-    class NewType:
-        def __init__(self, name: str, tp: type) -> None: ...
-        def __call__(self, x: _T) -> _T: ...
-        def __or__(self, other: Any) -> _SpecialForm: ...
-        def __ror__(self, other: Any) -> _SpecialForm: ...
-        __supertype__: type
-
-else:
-    def NewType(name: str, tp: Type[_T]) -> Type[_T]: ...
+# else:
+#     def NewType(name: str, tp: Type[_T]) -> Type[_T]: ...
 
 # These type variables are used by the container types.
 _S = TypeVar("_S")
@@ -234,21 +233,17 @@ def no_type_check_decorator(decorator: Callable[_P, _T]) -> Callable[_P, _T]: ..
 
 # Type aliases and type constructors
 
-class _Alias:
-    # Class for defining generic aliases for library types.
-    def __getitem__(self, typeargs: Any) -> Any: ...
-
-List = _Alias()
-Dict = _Alias()
+List = list
+Dict = dict
 # DefaultDict = _Alias()
-Set = _Alias()
+Set = set
 # FrozenSet = _Alias()
 # Counter = _Alias()
 # Deque = _Alias()
 # ChainMap = _Alias()
 
-if sys.version_info >= (3, 9):
-    Annotated: _SpecialForm
+
+Annotated: _SpecialForm
 
 # Predefined type variables.
 AnyStr = TypeVar("AnyStr", str, bytes)  # noqa: Y001
@@ -286,13 +281,13 @@ def runtime_checkable(cls: _TC) -> _TC: ...
 #         @abstractmethod
 #         def __index__(self) -> int: ...
 
-# @runtime_checkable
+
 class SupportsAbs(Protocol[_T_co]):
     @abstractmethod
     def __abs__(self) -> _T_co: ...
 
 
-# @runtime_checkable
+
 class SupportsHash(Protocol):
     __slots__ = ()
 
@@ -300,7 +295,7 @@ class SupportsHash(Protocol):
     def __hash__(self) -> int:
         pass
 
-# @runtime_checkable
+
 class SupportsRound(Protocol[_T_co]):
     @overload
     @abstractmethod
@@ -403,17 +398,6 @@ class Comparable(Protocol[_T_co]):
     def __ge__(self: TypeshedSelf, other: TypeshedSelf) -> bool: ...
 
 Coroutine = Generator
-
-@runtime_checkable
-class AsyncIterable(Protocol[_T_co]):
-    @abstractmethod
-    def __aiter__(self) -> AsyncIterator[_T_co]: ...
-
-@runtime_checkable
-class AsyncIterator(AsyncIterable[_T_co], Protocol[_T_co]):
-    @abstractmethod
-    async def __anext__(self) -> _T_co: ...
-    def __aiter__(self) -> AsyncIterator[_T_co]: ...
 
 AsyncGenerator = Coroutine
 
@@ -605,7 +589,7 @@ class Mapping(ABC, Collection[_KT], Generic[_KT, _VT_co]):
     # @overload
     # def update(self, **kwargs: _VT) -> None: ...
 
-Text = str
+# Text = str
 
 TYPE_CHECKING: bool
 
@@ -614,46 +598,17 @@ TYPE_CHECKING: bool
 # classes deriving from IO use different names for the arguments.
 # Functions
 
-if sys.version_info >= (3, 7):
-    _get_type_hints_obj_allowed_types = Union[
-        object,
-        Callable[..., Any],
-        FunctionType,
-        BuiltinFunctionType,
-        MethodType,
-        ModuleType,
-        WrapperDescriptorType,
-        MethodWrapperType,
-        MethodDescriptorType,
-    ]
-else:
-    _get_type_hints_obj_allowed_types = Union[
-        object,
-        Callable[..., Any],
-        FunctionType,
-        BuiltinFunctionType,
-        MethodType,
-        ModuleType,
-    ]
-
-if sys.version_info >= (3, 9):
-    def get_type_hints(
-        obj: _get_type_hints_obj_allowed_types,
-        globalns: dict[str, Any] | None = ...,
-        localns: dict[str, Any] | None = ...,
-        include_extras: bool = ...,
-    ) -> dict[str, Any]: ...
-
-else:
-    def get_type_hints(
-        obj: _get_type_hints_obj_allowed_types,
-        globalns: dict[str, Any] | None = ...,
-        localns: dict[str, Any] | None = ...,
-    ) -> dict[str, Any]: ...
-
-if sys.version_info >= (3, 8):
-    def get_origin(tp: Any) -> Any | None: ...
-    def get_args(tp: Any) -> tuple[Any, ...]: ...
+_get_type_hints_obj_allowed_types = (
+    object 
+    | Callable[..., Any]
+    | FunctionType
+    | BuiltinFunctionType
+    | MethodType
+    | ModuleType
+    | WrapperDescriptorType
+    | MethodWrapperType
+    | MethodDescriptorType
+    )
 
 @overload
 def cast(typ: Type[_T], val: Any) -> _T: ...
@@ -662,12 +617,11 @@ def cast(typ: str, val: Any) -> Any: ...
 @overload
 def cast(typ: object, val: Any) -> Any: ...
 
-if sys.version_info >= (3, 11):
-    def reveal_type(__obj: _T) -> _T: ...
-    def assert_never(__arg: Never) -> Never: ...
+def reveal_type(__obj: _T) -> _T: ...
+def assert_never(__arg: Never) -> Never: ...
 
 # Internal mypy fallback type for all typed dicts (does not exist at runtime)
-class _TypedDict(dict[str, object]):
+class _TypedDict(dict[str, object]): # type: ignore
     def copy(self: TypeshedSelf) -> TypeshedSelf: ...
     # Using NoReturn so that only calls using mypy plugin hook that specialize the signature
     # can go through.

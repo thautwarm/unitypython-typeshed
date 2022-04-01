@@ -3,8 +3,8 @@ import sys
 from typing import (
     # AbstractSet as Set,
     AsyncGenerator as AsyncGenerator,
-    AsyncIterable as AsyncIterable,
-    AsyncIterator as AsyncIterator,
+    # AsyncIterable as AsyncIterable,
+    # AsyncIterator as AsyncIterator,
     Awaitable as Awaitable,
     # ByteString as ByteString,
     Callable as Callable,
@@ -34,8 +34,8 @@ from typing_extensions import final
 __all__ = [
     "Awaitable",
     "Coroutine",
-    "AsyncIterable",
-    "AsyncIterator",
+    # "AsyncIterable",
+    # "AsyncIterator",
     "AsyncGenerator",
     "Hashable",
     "Iterable",

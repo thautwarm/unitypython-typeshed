@@ -11,8 +11,8 @@ _FuncT = TypeVar("_FuncT", bound=Callable[..., Any])
 __all__ = ["ABC", "abstractmethod"]
 
 # These definitions have special processing in mypy
-class ABCMeta(type):
-    __abstractmethods__: frozenset[str]
+class ABCMeta(type) # type: ignore
+    # __abstractmethods__: tuple[str]
     def __init__(self, name: str, bases: tuple[type, ...], namespace: dict[str, Any]) -> None: ...
     def __instancecheck__(cls: ABCMeta, instance: Any) -> Any: ...
     def __subclasscheck__(cls: ABCMeta, subclass: Any) -> Any: ...

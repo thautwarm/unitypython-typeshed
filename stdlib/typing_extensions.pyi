@@ -6,12 +6,12 @@ from typing import (  # noqa Y022
     Any,
     # AsyncContextManager as AsyncContextManager,
     AsyncGenerator as AsyncGenerator,
-    AsyncIterable as AsyncIterable,
-    AsyncIterator as AsyncIterator,
+    # AsyncIterable as AsyncIterable,
+    # AsyncIterator as AsyncIterator,
     Awaitable as Awaitable,
     Callable,
     # ChainMap as ChainMap,
-    ClassVar as ClassVar,
+    # ClassVar as ClassVar,
     ContextManager as ContextManager,
     Coroutine as Coroutine,
     # Counter as Counter,
@@ -22,11 +22,11 @@ from typing import (  # noqa Y022
     Mapping,
     NewType as NewType,
     NoReturn as NoReturn,
-    Text as Text,
+    # Text as Text,
     Type as Type,
     TypeVar,
     # ValuesView,
-    _Alias,
+    # _Alias,
     overload as overload,
 )
 
@@ -61,7 +61,7 @@ Literal: _SpecialForm
 def IntVar(name: str) -> Any: ...  # returns a new TypeVar
 
 # Internal mypy fallback type for all typed dicts (does not exist at runtime)
-class _TypedDict(dict[str, object], metaclass=abc.ABCMeta):
+class _TypedDict(dict[str, object], metaclass=abc.ABCMeta): # type: ignore
     # __required_keys__: frozenset[str]
     # __optional_keys__: frozenset[str]
     # __total__: bool
@@ -80,7 +80,7 @@ class _TypedDict(dict[str, object], metaclass=abc.ABCMeta):
 # TypedDict is a (non-subscriptable) special form.
 TypedDict: object
 
-OrderedDict = _Alias()
+# OrderedDict = _Alias()
 
 if sys.version_info >= (3, 7):
     def get_type_hints(
@@ -97,65 +97,34 @@ _AnnotatedAlias: Any  # undocumented
 
 
 # New things in 3.10
-if sys.version_info >= (3, 10):
-    from typing import (
-        Concatenate as Concatenate,
-        ParamSpec as ParamSpec,
-        TypeAlias as TypeAlias,
-        TypeGuard as TypeGuard,
-        # is_typeddict as is_typeddict,
-    )
-else:
-    class ParamSpecArgs:
-        __origin__: ParamSpec
-        def __init__(self, origin: ParamSpec) -> None: ...
 
-    class ParamSpecKwargs:
-        __origin__: ParamSpec
-        def __init__(self, origin: ParamSpec) -> None: ...
-
-    class ParamSpec:
-        __name__: str
-        __bound__: type[Any] | None
-        __covariant__: bool
-        __contravariant__: bool
-        def __init__(
-            self, name: str, *, bound: None | type[Any] | str = ..., contravariant: bool = ..., covariant: bool = ...
-        ) -> None: ...
-        @property
-        def args(self) -> ParamSpecArgs: ...
-        @property
-        def kwargs(self) -> ParamSpecKwargs: ...
-    Concatenate: _SpecialForm
-    TypeAlias: _SpecialForm
-    TypeGuard: _SpecialForm
-    def is_typeddict(tp: object) -> bool: ...
+from typing import (
+    # Concatenate as Concatenate,
+    # ParamSpec as ParamSpec,
+    TypeAlias as TypeAlias,
+    TypeGuard as TypeGuard,
+    # is_typeddict as is_typeddict,
+)
 
 # New things in 3.11
-if sys.version_info >= (3, 11):
-    from typing import Never as Never, Self as Self, assert_never as assert_never, reveal_type as reveal_type
-else:
-    Self: _SpecialForm
-    Never: _SpecialForm
-    def reveal_type(__obj: _T) -> _T: ...
-    def assert_never(__arg: NoReturn) -> NoReturn: ...
+from typing import Never as Never, Self as Self, assert_never as assert_never, reveal_type as reveal_type
 
 # Experimental (hopefully these will be in 3.11)
-Required: _SpecialForm
-NotRequired: _SpecialForm
-LiteralString: _SpecialForm
-Unpack: _SpecialForm
+# Required: _SpecialForm
+# NotRequired: _SpecialForm
+# LiteralString: _SpecialForm
+# Unpack: _SpecialForm
 
-@final
-class TypeVarTuple:
-    __name__: str
-    def __init__(self, name: str) -> None: ...
-    def __iter__(self) -> Any: ...  # Unpack[Self]
+# @final
+# class TypeVarTuple:
+#     __name__: str
+#     def __init__(self, name: str) -> None: ...
+#     def __iter__(self) -> Any: ...  # Unpack[Self]
 
-def dataclass_transform(
-    *,
-    eq_default: bool = ...,
-    order_default: bool = ...,
-    kw_only_default: bool = ...,
-    field_descriptors: tuple[type[Any] | Callable[..., Any], ...] = ...,
-) -> Callable[[_T], _T]: ...
+# def dataclass_transform(
+#     *,
+#     eq_default: bool = ...,
+#     order_default: bool = ...,
+#     kw_only_default: bool = ...,
+#     field_descriptors: tuple[type[Any] | Callable[..., Any], ...] = ...,
+# ) -> Callable[[_T], _T]: ...
