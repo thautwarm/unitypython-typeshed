@@ -1826,3 +1826,11 @@ class NotImplementedError(RuntimeError): ...
 #         def __new__(cls: type[Self], __message: str, __exceptions: Sequence[Exception]) -> Self: ...
 #         @property
 #         def exceptions(self) -> tuple[Exception, ...]: ...
+
+@final
+class _NotImplementedType(Any):  # type: ignore[misc]
+    # A little weird, but typing the __call__ as NotImplemented makes the error message
+    # for NotImplemented() much better
+    __call__: NotImplemented  # type: ignore[valid-type]
+
+NotImplemented: _NotImplementedType
