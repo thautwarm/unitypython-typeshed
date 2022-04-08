@@ -17,7 +17,7 @@ from typing_extensions import (
     final as _final,
 )
 
-from types import MethodDescriptorType, MethodWrapperType, WrapperDescriptorType
+# from types import MethodDescriptorType, MethodWrapperType, WrapperDescriptorType
 
 # from types import GenericAlias
 
@@ -26,13 +26,13 @@ __all__ = [
     "Any",
     "Callable",
     # "ClassVar",
-    # "Concatenate",
+    "Concatenate",
     "Final",
     "ForwardRef",
     "Generic",
     "Literal",
     # "Optional",
-    # "ParamSpec",
+    "ParamSpec",
     "Protocol",
     "Tuple",
     "Type",
@@ -176,34 +176,34 @@ Never: _SpecialForm = ...
 # class GenericMeta(type): ...
 
 # TODO: support ParameterSpec
-# class ParamSpecArgs:
-#     __origin__: ParamSpec
-#     def __init__(self, origin: ParamSpec) -> None: ...
+class ParamSpecArgs:
+    __origin__: ParamSpec
+    def __init__(self, origin: ParamSpec) -> None: ...
 
-# class ParamSpecKwargs:
-#     __origin__: ParamSpec
-#     def __init__(self, origin: ParamSpec) -> None: ...
+class ParamSpecKwargs:
+    __origin__: ParamSpec
+    def __init__(self, origin: ParamSpec) -> None: ...
 
-# class ParamSpec:
-#     __name__: str
-#     __bound__: Any | None
-#     __covariant__: bool
-#     __contravariant__: bool
-#     def __init__(
-#         self,
-#         name: str,
-#         *,
-#         bound: Any | None = ...,
-#         contravariant: bool = ...,
-#         covariant: bool = ...
-#     ) -> None: ...
-#     @property
-#     def args(self) -> ParamSpecArgs: ...
-#     @property
-#     def kwargs(self) -> ParamSpecKwargs: ...
-#     def __or__(self, other: Any) -> _SpecialForm: ...
-#     def __ror__(self, other: Any) -> _SpecialForm: ...
-    # Concatenate: _SpecialForm
+class ParamSpec:
+    __name__: str
+    __bound__: Any | None
+    __covariant__: bool
+    __contravariant__: bool
+    def __init__(
+        self,
+        name: str,
+        *,
+        bound: Any | None = ...,
+        contravariant: bool = ...,
+        covariant: bool = ...
+    ) -> None: ...
+    @property
+    def args(self) -> ParamSpecArgs: ...
+    @property
+    def kwargs(self) -> ParamSpecKwargs: ...
+    def __or__(self, other: Any) -> _SpecialForm: ...
+    def __ror__(self, other: Any) -> _SpecialForm: ...
+Concatenate: _SpecialForm
 TypeAlias: _SpecialForm
 TypeGuard: _SpecialForm
 
@@ -605,9 +605,9 @@ _get_type_hints_obj_allowed_types = (
     | BuiltinFunctionType
     | MethodType
     | ModuleType
-    | WrapperDescriptorType
-    | MethodWrapperType
-    | MethodDescriptorType
+    # | WrapperDescriptorType
+    # | MethodWrapperType
+    # | MethodDescriptorType
     )
 
 @overload

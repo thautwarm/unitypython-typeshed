@@ -1,0 +1,399 @@
+from _typeshed import Self
+from abc import abstractmethod
+from re import X
+from typing import Annotated, Any, Callable, Concatenate, Generic, Iterable, Iterator, Literal, ParamSpec, Protocol, Type, TypeGuard, TypeVar, final, overload
+
+
+def setProjectDirectory(__path: str) -> None: ...
+def getPersistentDataPath() -> str: ...
+
+@final
+class Color:
+    def __eq__(self, __o: Color) -> bool: ...
+    def __ne__(self, __o: Color) -> bool: ...
+    def __hash__(self) -> int: ...
+
+    r: float
+    g: float
+    b: float
+    a: float
+
+    def __new__(cls: Type[Self], r: float, g: float, b: float, a: float) -> Self: ...
+
+
+@final
+class Vector3:
+    def __eq__(self, __o: Vector3) -> bool: ...
+    def __ne__(self, __o: Vector3) -> bool: ...
+    def __hash__(self) -> int: ...
+        
+    @overload
+    def __add__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __add__(self, __o: int) -> Vector3: ...
+    @overload
+    def __add__(self, __o: float) -> Vector3: ...
+    @overload
+    def __radd__(self, __o: int) -> Vector3: ...
+    @overload
+    def __radd__(self, __o: float) -> Vector3: ...
+
+    @overload
+    def __sub__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __sub__(self, __o: int) -> Vector3: ...
+    @overload
+    def __sub__(self, __o: float) -> Vector3: ...
+    @overload
+    def __rsub__(self, __o: int) -> Vector3: ...
+    @overload
+    def __rsub__(self, __o: float) -> Vector3: ...
+
+    @overload
+    def __mul__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __mul__(self, __o: int) -> Vector3: ...
+    @overload
+    def __mul__(self, __o: float) -> Vector3: ...
+    @overload
+    def __rmul__(self, __o: int) -> Vector3: ...
+    @overload
+    def __rmul__(self, __o: float) -> Vector3: ...
+
+    def __matmul__(self, __o: Vector3) -> float: ...
+
+    @overload
+    def __truediv__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __truediv__(self, __o: int) -> Vector3: ...
+    @overload
+    def __truediv__(self, __o: float) -> Vector3: ...
+    @overload
+    def __rtruediv__(self, __o: int) -> Vector3: ...
+    @overload
+    def __rtruediv__(self, __o: float) -> Vector3: ...
+
+
+    @overload
+    def __pow__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __pow__(self, __o: int) -> Vector3: ...
+    @overload
+    def __pow__(self, __o: float) -> Vector3: ...
+    @overload
+    def __rpow__(self, __o: int) -> Vector3: ...
+    @overload
+    def __rpow__(self, __o: float) -> Vector3: ...
+
+
+    @overload
+    def __mod__(self, __o: Vector3) -> Vector3: ...
+    @overload
+    def __mod__(self, __o: int) -> Vector3: ...
+    @overload
+    def __mod__(self, __o: float) -> Vector3: ...
+    @overload
+    def __rmod__(self, __o: int) -> Vector3: ...
+    @overload
+    def __rmod__(self, __o: float) -> Vector3: ...
+
+    def __neg__(self) -> Vector3: ...
+    def __abs__(self) -> Vector3: ...
+
+    x: float
+    y: float
+    z: float
+    def __new__(cls: Type[Self], __x: float, __y: float, __z: float) -> Self: ...
+    def tovec2(self) -> Vector2: ...
+
+@final
+class Vector2:
+    def __eq__(self, __o: Vector2) -> bool: ...
+    def __ne__(self, __o: Vector2) -> bool: ...
+    def __hash__(self) -> int: ...
+        
+    @overload
+    def __add__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __add__(self, __o: int) -> Vector2: ...
+    @overload
+    def __add__(self, __o: float) -> Vector2: ...
+    @overload
+    def __radd__(self, __o: int) -> Vector2: ...
+    @overload
+    def __radd__(self, __o: float) -> Vector2: ...
+
+    @overload
+    def __sub__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __sub__(self, __o: int) -> Vector2: ...
+    @overload
+    def __sub__(self, __o: float) -> Vector2: ...
+    @overload
+    def __rsub__(self, __o: int) -> Vector2: ...
+    @overload
+    def __rsub__(self, __o: float) -> Vector2: ...
+
+    @overload
+    def __mul__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __mul__(self, __o: int) -> Vector2: ...
+    @overload
+    def __mul__(self, __o: float) -> Vector2: ...
+    @overload
+    def __rmul__(self, __o: int) -> Vector2: ...
+    @overload
+    def __rmul__(self, __o: float) -> Vector2: ...
+
+    def __matmul__(self, __o: Vector2) -> float: ...
+    
+    @overload
+    def __truediv__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __truediv__(self, __o: int) -> Vector2: ...
+    @overload
+    def __truediv__(self, __o: float) -> Vector2: ...
+    @overload
+    def __rtruediv__(self, __o: int) -> Vector2: ...
+    @overload
+    def __rtruediv__(self, __o: float) -> Vector2: ...
+
+
+    @overload
+    def __pow__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __pow__(self, __o: int) -> Vector2: ...
+    @overload
+    def __pow__(self, __o: float) -> Vector2: ...
+    @overload
+    def __rpow__(self, __o: int) -> Vector2: ...
+    @overload
+    def __rpow__(self, __o: float) -> Vector2: ...
+
+
+    @overload
+    def __mod__(self, __o: Vector2) -> Vector2: ...
+    @overload
+    def __mod__(self, __o: int) -> Vector2: ...
+    @overload
+    def __mod__(self, __o: float) -> Vector2: ...
+    @overload
+    def __rmod__(self, __o: int) -> Vector2: ...
+    @overload
+    def __rmod__(self, __o: float) -> Vector2: ...
+
+    def __neg__(self) -> Vector2: ...
+    def __abs__(self) -> Vector2: ...
+
+    x: float
+    y: float
+
+    def __new__(cls: Type[Self], __x: float, __y: float) -> Self: ...
+
+    def tovec3(self) -> Vector3: ...
+
+@final
+class ImageResource:
+    @staticmethod
+    def Load(__path: str) -> ImageResource: ...
+
+    def Destroy(self) -> None: ...
+
+@final
+class EventTriggerType:
+    PointerEnter: EventTriggerType
+    PointerDown: EventTriggerType
+    PointerExit: EventTriggerType
+    PointerUp: EventTriggerType
+    PointerClick: EventTriggerType
+    Drag: EventTriggerType
+    Drop: EventTriggerType
+    Scroll: EventTriggerType
+    UpdateSelected: EventTriggerType
+    Select: EventTriggerType
+    Deselect: EventTriggerType
+    Move: EventTriggerType
+    InitializePotentialDrag: EventTriggerType
+    BeginDrag: EventTriggerType
+    EndDrag: EventTriggerType
+    Submit: EventTriggerType
+    Cancel: EventTriggerType
+    __new__ = None  # type: ignore[override]
+
+
+_TComponent_co = TypeVar('_TComponent_co', covariant=True, bound=MonoBehaviour)
+_TComponent = TypeVar('_TComponent', bound=MonoBehaviour)
+_TGameST = TypeVar('_TGameST')
+_TParams = TypeVar('_TParams')
+
+@final
+class EventData:
+    __new__ = None # type: ignore[override]
+    screen_pos: Vector2
+
+
+from typing import Iterable
+
+T = TypeVar('T', bound=Iterable)
+
+class MonoBehaviour(Generic[_TGameST, _TParams]):
+    @abstractmethod
+    def __init__(self, __gameState: _TGameST, __parameters: _TParams | None = ...) -> None: ...
+
+    @property
+    def gameObject(self) -> GameObject:
+        """get the base GameObject to attach components to"""
+        ...
+
+    @property
+    def x(self) -> float:
+        """x (screen position)
+        """
+        ...
+    @x.setter
+    def x(self, __v: float) -> None: ...
+
+    @property
+    def y(self) -> float:
+        """y (screen position)
+        """
+        ...
+    
+    @y.setter
+    def y(self, __v: float) -> None: ...
+
+    @property
+    def z(self) -> float:
+        """z (world position)
+        """
+        ...
+    
+    @z.setter
+    def z(self, __v: float) -> None: ...
+    def on(self, __ev: EventTriggerType) -> Callable[[Callable[[EventData], None]], Callable[[EventData], None]]: ...
+    def requireComponents(self, *cs: Type[_TComponent]) -> None: ...
+
+@final
+class GameObject:
+    
+
+    @property
+    def x(self) -> float:
+        """x (screen position)
+        """
+        ...
+    @x.setter
+    def x(self, __v: float) -> None: ...
+
+    @property
+    def y(self) -> float:
+        """y (screen position)
+        """
+        ...
+    
+    @y.setter
+    def y(self, __v: float) -> None: ...
+
+    @property
+    def z(self) -> float:
+        """z (world position)
+        """
+        ...
+    
+    @z.setter
+    def z(self, __v: float) -> None: ...
+
+    def on(self, __ev: EventTriggerType) -> Callable[[Callable[[EventData], None]], Callable[[EventData], None]]: ...
+    def requireComponents(self, *cs: Type[_TComponent]) -> None: ...
+    def __getitem__(self, x: Type[_TComponent]) -> ComponentGroup[_TComponent]: ...
+    
+
+@final
+class ComponentGroup(Protocol[_TComponent_co]):
+    @overload
+    def add(self: ComponentGroup[MonoBehaviour[_TGameST, _TParams | None]], __gameState: _TGameST, __parameters: _TParams | None = None) -> _TComponent_co: ...
+    @overload
+    def add(self: ComponentGroup[MonoBehaviour[_TGameST, _TParams]], __gameState: _TGameST, __parameters: _TParams) -> _TComponent_co: ...
+    def peek(self) -> _TComponent_co | None: ...
+
+    def __iter__(self) -> Iterator[_TComponent_co]: ...
+
+
+class _UIProto:
+    ui: UI
+    width: float
+    height: float
+
+@final
+class UI(MonoBehaviour[Any, Any]):
+    width: float
+    height: float
+
+@final
+class Text(MonoBehaviour[Any, Any], _UIProto):
+    AlignMiddle: int
+    AlignLeft: int
+    AlignRight: int
+    AlignTop: int
+    AlignBottom: int
+    AlignCenter: int
+
+    autoSize: bool
+    """autoSizeTextContainer
+    Determines if the size of the text container will be adjusted to fit the text object when it is first created.
+    """
+    color: Color
+
+    overflowMode: Literal["..."] | Literal["Page"] | Literal["Scroll"]
+    """Controls the Text Overflow Mode.
+    '...' means the Ellipsis mode.
+    """
+
+    pageCount: int
+    """textInfo.pageCount
+    """
+
+    characterCount: int
+    """textInfo.characterCount
+    """
+    displayingPage: int
+    """textInfo.pageToDisplay. Must be between **1** and textInfo.pageCount
+    """
+    maxVisibleCharacters: int
+    """Allows to control how many characters are visible from the input.
+    """
+
+    contents: str
+    """text contents
+    """
+
+    alignment: int
+    """Check Text.Align* for possible values; values are int flags"""
+
+    def forceMeshUpdate(self, ignoreActiveState: bool = False, forceTextReparsing: bool = False) -> None: ...
+
+    def playText(self, text: str, speed: float = 0.5) -> iter[None]:
+        """Play text with a given speed. Note that 'displayingPage' needs to be updated separately,
+        otherwise this will not stop.
+        """
+        ...
+
+
+
+
+@final
+class SpriteImage(MonoBehaviour[Any, Any], _UIProto):
+    alpha: float
+    """alpha in (0, 1)
+    """
+    image: ImageResource
+
+
+@final
+class Sprite(MonoBehaviour[Any, Any]):
+    width: float
+    height: float
+    alpha: float
+    """alpha in (0, 1)
+    """
+    image: ImageResource
