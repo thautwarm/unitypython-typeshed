@@ -26,7 +26,7 @@ class Vector3:
     def __eq__(self, __o: Vector3) -> bool: ...
     def __ne__(self, __o: Vector3) -> bool: ...
     def __hash__(self) -> int: ...
-        
+
     @overload
     def __add__(self, __o: Vector3) -> Vector3: ...
     @overload
@@ -111,7 +111,7 @@ class Vector2:
     def __eq__(self, __o: Vector2) -> bool: ...
     def __ne__(self, __o: Vector2) -> bool: ...
     def __hash__(self) -> int: ...
-        
+
     @overload
     def __add__(self, __o: Vector2) -> Vector2: ...
     @overload
@@ -146,7 +146,7 @@ class Vector2:
     def __rmul__(self, __o: float) -> Vector2: ...
 
     def __matmul__(self, __o: Vector2) -> float: ...
-    
+
     @overload
     def __truediv__(self, __o: Vector2) -> Vector2: ...
     @overload
@@ -229,12 +229,35 @@ _TParams = TypeVar('_TParams')
 @final
 class EventData:
     __new__ = None # type: ignore[override]
-    screen_pos: Vector2
+    @property
+    def screen_pos(self) -> Vector2:
+        ...
+    @property
+    def delta(self) -> Vector2:
+        ...
+    @property
+    def clickCount(self) -> int:
+        ...
+    @property
+    def clickTime(self) -> float:
+        ...
+    @property
+    def hovered(self) -> iter[GameObject]:
+        ...
+    @property
+    def is_scrolling(self) -> bool:
+        ...
+    @property
+    def is_dragging(self) -> bool:
+        ...
+    @property
+    def scroll_delta_y(self) -> float:
+        ...
+    @property
+    def is_pointer_moving(self) -> bool:
+        ...
 
 
-from typing import Iterable
-
-T = TypeVar('T', bound=Iterable)
 
 class MonoBehaviour(Generic[_TGameST, _TParams]):
     @abstractmethod
@@ -258,7 +281,7 @@ class MonoBehaviour(Generic[_TGameST, _TParams]):
         """y (screen position)
         """
         ...
-    
+
     @y.setter
     def y(self, __v: float) -> None: ...
 
@@ -267,7 +290,7 @@ class MonoBehaviour(Generic[_TGameST, _TParams]):
         """z (world position)
         """
         ...
-    
+
     @z.setter
     def z(self, __v: float) -> None: ...
     def on(self, __ev: EventTriggerType) -> Callable[[Callable[[EventData], None]], Callable[[EventData], None]]: ...
@@ -275,38 +298,22 @@ class MonoBehaviour(Generic[_TGameST, _TParams]):
 
 @final
 class GameObject:
-    
 
-    @property
-    def x(self) -> float:
-        """x (screen position)
-        """
-        ...
-    @x.setter
-    def x(self, __v: float) -> None: ...
+    x: float
+    """x (screen position)"""
+    y: float
+    """y (screen position)"""
 
-    @property
-    def y(self) -> float:
-        """y (screen position)
-        """
-        ...
-    
-    @y.setter
-    def y(self, __v: float) -> None: ...
+    z: float
+    """z (world position)"""
+    ...
 
-    @property
-    def z(self) -> float:
-        """z (world position)
-        """
-        ...
-    
-    @z.setter
-    def z(self, __v: float) -> None: ...
+    parent: GameObject | None
 
     def on(self, __ev: EventTriggerType) -> Callable[[Callable[[EventData], None]], Callable[[EventData], None]]: ...
     def requireComponents(self, *cs: Type[_TComponent]) -> None: ...
     def __getitem__(self, x: Type[_TComponent]) -> ComponentGroup[_TComponent]: ...
-    
+
 
 @final
 class ComponentGroup(Protocol[_TComponent_co]):
@@ -388,6 +395,12 @@ class SpriteImage(MonoBehaviour[Any, Any], _UIProto):
     """
     image: ImageResource
 
+@final
+class RawImage(MonoBehaviour[Any, Any], _UIProto):
+    alpha: float
+    """alpha in (0, 1)
+    """
+    image: ImageResource
 
 @final
 class Sprite(MonoBehaviour[Any, Any]):
@@ -397,3 +410,49 @@ class Sprite(MonoBehaviour[Any, Any]):
     """alpha in (0, 1)
     """
     image: ImageResource
+
+
+@final
+class ScrollRect(MonoBehaviour[Any, Any], _UIProto):
+    elasticity: float
+    """The amount of elasticity to use when the content moves beyond the scroll rect."""
+    decelerationRate: float
+    """The rate at which movement slows down."""
+    content: UI
+    """The content that can be scrolled. It should be a child of the GameObject with ScrollRect on it."""
+    inertia: bool
+    """Should movement inertia be enabled?"""
+    movementType: Literal["Unrestricted"] | Literal["Elastic"] | Literal["Clamped"]
+
+    horizontalScrollbarSpacing: float
+    """The space between the scrollbar and the viewport."""
+    verticalScrollbarSpacing: float
+    """The space between the scrollbar and the viewport."""
+
+    def onValueChanged(self, callback: Callable[[Vector2, None], Any]) -> None:
+        """Callback executed when the position of the child changes."""
+
+
+@final
+class PolygonCollider2D(MonoBehaviour[Any, Any]):
+    def resetShape(self, sprite: Sprite, tolerance: float = 0.5): ...
+
+@final
+class CanvasGroup(MonoBehaviour[Any, Any]):
+    blocksRaycasts: bool
+    """Does this group block raycasting (allow collision)."""
+    alpha: float
+    """Set the alpha of the group."""
+    ignoreParentGroups: bool
+    """Should the group ignore parent groups?"""
+    interactable: bool
+    """Is the group interactable (are the elements beneath the group enabled)."""
+
+@final
+class Canvas(MonoBehaviour[Any, Any]):
+    rootCanvas: Canvas
+    """Returns the Canvas closest to root, by checking through each parent and returning the last canvas found. If no other canvas is found then the canvas will return itself."""
+    sortingOrder: int
+    """Canvas' order within a sorting layer."""
+
+del _UIProto
