@@ -1,6 +1,5 @@
 from _typeshed import Self
 from abc import abstractmethod
-from re import X
 from typing import Annotated, Any, Callable, Concatenate, Generic, Iterable, Iterator, Literal, ParamSpec, Protocol, Type, TypeGuard, TypeVar, final, overload
 
 
@@ -108,6 +107,7 @@ class Vector3:
     def __new__(cls: Type[Self], __x: float, __y: float, __z: float) -> Self: ...
     def tovec2(self) -> Vector2: ...
 
+
 @final
 class Vector2:
     def __eq__(self, __o: Vector2) -> bool: ...
@@ -194,12 +194,14 @@ class Vector2:
 
     def tovec3(self) -> Vector3: ...
 
+
 @final
 class ImageResource:
     @staticmethod
     def load(__path: str) -> ImageResource: ...
 
     def destory(self) -> None: ...
+
 
 @final
 class EventTriggerType:
@@ -337,6 +339,10 @@ class _UIProto:
 class UI(MonoBehaviour[Any, Any]):
     width: float
     height: float
+
+
+RectTransform = UI
+
 
 @final
 class Text(MonoBehaviour[Any, Any], _UIProto):
