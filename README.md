@@ -1,4 +1,4 @@
-[https://github.com/thautwarm/vscode-unitypython] is preferred. The whole project is migrated to `vscode-unitypython/resources/unitypython-typeshed`.
+https://github.com/thautwarm/vscode-unitypython is preferred. The whole project is migrated to `vscode-unitypython/resources/unitypython-typeshed`.
 
 
 # UnityPython typeshed
