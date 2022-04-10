@@ -78,7 +78,7 @@ class _TypedDict(dict[str, object], metaclass=abc.ABCMeta): # type: ignore
     def __delitem__(self, k: NoReturn) -> None: ...
 
 # TypedDict is a (non-subscriptable) special form.
-TypedDict: object
+TypedDict: _SpecialForm
 
 # OrderedDict = _Alias()
 

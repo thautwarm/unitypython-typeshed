@@ -162,12 +162,11 @@ Callable: _SpecialForm
 # Optional: _SpecialForm
 Tuple: _SpecialForm
 # ClassVar: _SpecialForm
-if sys.version_info >= (3, 8):
-    Final: _SpecialForm
-    def final(f: _T) -> _T: ...
-    Literal: _SpecialForm
-    # TypedDict is a (non-subscriptable) special form.
-    TypedDict: object
+
+Final: _SpecialForm
+def final(f: _T) -> _T: ...
+Literal: _SpecialForm
+TypedDict: object
 
 
 Self: _SpecialForm
@@ -621,7 +620,7 @@ def reveal_type(__obj: _T) -> _T: ...
 def assert_never(__arg: Never) -> Never: ...
 
 # Internal mypy fallback type for all typed dicts (does not exist at runtime)
-class _TypedDict(dict[str, object]): # type: ignore
+class _TypedDict(dict[str, object], metaclass=abc.ABCMeta): # type: ignore
     def copy(self: TypeshedSelf) -> TypeshedSelf: ...
     # Using NoReturn so that only calls using mypy plugin hook that specialize the signature
     # can go through.
