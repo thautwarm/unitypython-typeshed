@@ -1,3 +1,6 @@
+[https://github.com/thautwarm/vscode-unitypython] is preferred. The whole project is migrated to `vscode-unitypython/resources/unitypython-typeshed`.
+
+
 # UnityPython typeshed
 
 This work is based on [typeshed](https://github.com/python/typeshed/), and the main IDE target is Pylance.
